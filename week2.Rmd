@@ -1,0 +1,53 @@
+---
+title: "Week 2 assignment"
+author: "Catherine Okuboyejo"
+date: "20 January 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(leaflet)
+```
+
+##The homes of some British cheeses
+
+```{r}
+#Define latitude and longitude df
+cheesyplaces <- data.frame(
+        lat = c(51.279, 52.633333, 51.578, 55.7, 50.266047, 54.3056, 51.97862, 51.2707, 52.7691, 51.0346),
+        lng = c(-2.778, -1.133333, -3.218, -4.54, -4.9, -2.16667, -2.43774, -0.3388, -2.3787, -0.0267)
+)
+
+cheesetypes <- c("Cheddar",
+                 "Red Leicester",
+                 "Caerphilly",
+                 "Dunlop",
+                 "Cornish Blue",
+                 "Wensleydale",
+                 "Stinking Bishop",
+                 "Norbury Blue",
+                 "Newport 1665",
+                 "Duddleswell")
+```
+
+
+```{r}
+#Define an icon for markers
+cheesyicon <- makeIcon(
+        iconUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4f/Twemoji2_1f9c0.svg",
+        iconWidth = 31*215/230, iconHeight = 31,
+        iconAnchorX = 31*215/230/2, iconAnchorY = 16)
+
+```
+
+
+```{r}
+#Create map
+cheesyplaces %>%
+        leaflet() %>%
+        addTiles() %>%
+        addMarkers(icon = cheesyicon, 
+                   popup = cheesetypes,
+                   clusterOptions = markerClusterOptions())
+```
